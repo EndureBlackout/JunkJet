@@ -22,8 +22,12 @@ public class JunkJetListener implements Listener {
 
 	@EventHandler
 	public void useJunkJet(PlayerInteractEvent e) {
-		if ((e.getAction() == Action.RIGHT_CLICK_AIR) || (e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-			shootJunk(e.getPlayer());
+		if ((e.getAction() == Action.RIGHT_CLICK_AIR)
+				|| (e.getAction() == Action.RIGHT_CLICK_BLOCK) && (e.getItem().getType().equals(Material.STONE_HOE))) {
+
+			if (isJunkJet(e.getItem())) {
+				shootJunk(e.getPlayer());
+			}
 		}
 	}
 
@@ -53,7 +57,9 @@ public class JunkJetListener implements Listener {
 					arrow.setShooter(p);
 					arrow.setVelocity(p.getEyeLocation().getDirection().multiply(2));
 					break;
-				} else if (i.getType().equals(null)) {
+				} else if (i.getType().equals(null) || i.getType().equals(Material.AIR)) {
+					continue;
+				} else if ((!i.getType().equals(Material.STONE)) || (!i.getType().equals(Material.COBBLESTONE))) {
 					continue;
 				}
 			}
@@ -73,5 +79,14 @@ public class JunkJetListener implements Listener {
 				break;
 			}
 		}
+	}
+
+	public boolean isJunkJet(ItemStack i) {
+		if (i.getItemMeta().getDisplayName().equals(ChatColor.RED + "" + ChatColor.BOLD + "Junk Jet")) {
+			if (i.getItemMeta().getLore().contains(ChatColor.DARK_BLUE + "" + ChatColor.BOLD + "JUNK JUNK JUNK")) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
