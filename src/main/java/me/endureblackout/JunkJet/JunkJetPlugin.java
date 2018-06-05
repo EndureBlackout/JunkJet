@@ -24,6 +24,12 @@ public class JunkJetPlugin extends JavaPlugin {
 		junkJet.setIngredient('R', Material.REDSTONE_TORCH_ON);
 		junkJet.setIngredient('S', Material.STICK);
 		
+		@SuppressWarnings("deprecation")
+		ShapedRecipe ignitedJunkJet = new ShapedRecipe(ignitedJunkJet());
+		ignitedJunkJet.shape("AAA", "AJF", "AAA");
+		ignitedJunkJet.setIngredient('J', createJunkJet().getData());
+		ignitedJunkJet.setIngredient('F', Material.FLINT_AND_STEEL);
+		
 		Bukkit.addRecipe(junkJet);
 	}
 	
@@ -39,6 +45,22 @@ public class JunkJetPlugin extends JavaPlugin {
 		jetMeta.setLore(lore);
 
 		junkJet.setItemMeta(jetMeta);
+
+		return junkJet;
+	}
+	
+	public ItemStack ignitedJunkJet() {
+		ItemStack junkJet = new ItemStack(Material.GOLD_HOE);
+		ItemMeta junkMeta = junkJet.getItemMeta();
+		
+		junkMeta.setDisplayName(ChatColor.RED + "" + ChatColor.BOLD + "Ignited Junk Jet");
+
+		ArrayList<String> lore = new ArrayList<String>();
+		lore.add(ChatColor.translateAlternateColorCodes('&', "&1&l&k; &1&lJUNK JUNK JUNK &1&l&k;"));
+
+		junkMeta.setLore(lore);
+
+		junkJet.setItemMeta(junkMeta);
 
 		return junkJet;
 	}
